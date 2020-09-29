@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_APPL_LOG_DISPLAY</CLSNAME>
+    <LANGU>D</LANGU>
+    <DESCRIPT>Application Log: Anzeige</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_APPL_LOG_DISPLAY</CLSNAME>
+     <CMPNAME>ADD_LOG</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Log hinzufügen</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_APPL_LOG_DISPLAY</CLSNAME>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CONSTRUCTOR</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_APPL_LOG_DISPLAY</CLSNAME>
+     <CMPNAME>CONTROL_HANDLE</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Anwendungs-Log: Handle auf die Control-Anzeige</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_APPL_LOG_DISPLAY</CLSNAME>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Log anzeigen</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_APPL_LOG_DISPLAY</CLSNAME>
+     <CMPNAME>O_CONTAINER</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Abstracter Container fuer GUI Controls</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_APPL_LOG_DISPLAY</CLSNAME>
+     <CMPNAME>SET_CONTAINER</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>GUI-Container setzen</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_APPL_LOG_DISPLAY</CLSNAME>
+     <CMPNAME>SET_PROFILE</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Anzeigeprofil setzen</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_APPL_LOG_DISPLAY</CLSNAME>
+     <CMPNAME>S_PROFILE</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Anwendungs-Log: Aufbereitungs-Profil für Protokollausgabe</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_APPL_LOG_DISPLAY</CLSNAME>
+     <CMPNAME>T_LOGS</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Darzustellende Logs</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>
