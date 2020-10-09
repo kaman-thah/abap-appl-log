@@ -108,6 +108,12 @@ CLASS zcl_appl_log DEFINITION
     METHODS add_merrdat
       IMPORTING
         !is_merrdat TYPE merrdat .
+    CLASS-METHODS:
+      load
+        IMPORTING log_number    TYPE balognr
+        RETURNING VALUE(result) TYPE REF TO zcl_appl_log
+        RAISING   zcx_appl_log_no_existence.
+
   PROTECTED SECTION.
 *"* protected components of class ZCL_PI_MIX_APPL_LOG
 *"* do not include other source files here!!!
@@ -128,7 +134,7 @@ ENDCLASS.
 
 
 
-CLASS ZCL_APPL_LOG IMPLEMENTATION.
+CLASS zcl_appl_log IMPLEMENTATION.
 
 
   METHOD add.
@@ -436,13 +442,6 @@ CLASS ZCL_APPL_LOG IMPLEMENTATION.
 
   METHOD constructor.
 
-    CALL FUNCTION 'BAL_LOG_CREATE'
-      EXPORTING
-        i_s_log      = is_log
-      IMPORTING
-        e_log_handle = me->log_hndl
-      EXCEPTIONS
-        OTHERS       = 0.
     IF  is_log-object     IS INITIAL OR
         is_log-subobject  IS INITIAL.
       CLEAR me->saveable.
@@ -455,15 +454,25 @@ CLASS ZCL_APPL_LOG IMPLEMENTATION.
 
   METHOD create.
 
-    DATA
-      : ls_log        TYPE        bal_s_log
-      .
+    DATA:
+      ls_log        TYPE        bal_s_log.
+
     ls_log-object = id_object.
     ls_log-subobject  = id_subobject.
     ls_log-extnumber = id_extnumber.
+
     CREATE OBJECT ro_appl_log
       EXPORTING
         is_log = ls_log.
+
+    CALL FUNCTION 'BAL_LOG_CREATE'
+      EXPORTING
+        i_s_log      = ls_log
+      IMPORTING
+        e_log_handle = ro_appl_log->log_hndl
+      EXCEPTIONS
+        OTHERS       = 0.
+
     APPEND ro_appl_log TO t_inst.
 
   ENDMETHOD.
@@ -707,4 +716,62 @@ CLASS ZCL_APPL_LOG IMPLEMENTATION.
         OTHERS               = 0.
 
   ENDMETHOD.
+
+  METHOD load.
+
+    DATA:
+      log_header_data TYPE        bal_s_log,
+      log_handles     TYPE bal_t_logh.
+
+    CALL FUNCTION 'BAL_DB_LOAD'
+      EXPORTING
+        i_t_lognumber      = VALUE bal_t_logn( ( log_number ) )
+      IMPORTING
+        e_t_log_handle     = log_handles
+      EXCEPTIONS
+        no_logs_specified  = 1                " No logs specified
+        log_not_found      = 2                " Log not found
+        log_already_loaded = 3                " Log is already loaded
+        OTHERS             = 4.
+    IF sy-subrc <> 0.
+      RAISE EXCEPTION TYPE zcx_appl_log_no_existence
+        EXPORTING
+          textid = zcx_appl_log_no_existence=>zcx_appl_log_no_existence
+          lognr  = log_number.
+    ENDIF.
+
+    IF lines( log_handles ) > 0.
+      DATA(log_handle) = log_handles[ 1 ].
+    ELSE.
+      RAISE EXCEPTION TYPE zcx_appl_log_no_existence
+        EXPORTING
+          textid = zcx_appl_log_no_existence=>zcx_appl_log_no_existence
+          lognr  = log_number.
+    ENDIF.
+
+    CALL FUNCTION 'BAL_LOG_HDR_READ'
+      EXPORTING
+        i_log_handle  = log_handle
+      IMPORTING
+        e_s_log       = log_header_data
+      EXCEPTIONS
+        log_not_found = 1                " Log not found
+        OTHERS        = 2.
+    IF sy-subrc <> 0.
+      RAISE EXCEPTION TYPE zcx_appl_log_no_existence
+        EXPORTING
+          textid = zcx_appl_log_no_existence=>zcx_appl_log_no_existence
+          lognr  = log_number.
+    ENDIF.
+
+    CREATE OBJECT result
+      EXPORTING
+        is_log = log_header_data.
+    result->log_hndl = log_handle.
+    result->log_nr   = log_number.
+
+    APPEND result TO t_inst.
+
+  ENDMETHOD.
+
 ENDCLASS.
